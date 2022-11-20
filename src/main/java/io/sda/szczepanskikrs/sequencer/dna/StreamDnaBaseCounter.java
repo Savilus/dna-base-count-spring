@@ -1,8 +1,11 @@
 package io.sda.szczepanskikrs.sequencer.dna;
 
+import org.springframework.stereotype.Component;
+
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Component
 public class StreamDnaBaseCounter implements DnaBaseCounter {
     @Override
     public DnaBaseCount calculateDnaBaseCount(String rawBase) {
