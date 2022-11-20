@@ -1,4 +1,4 @@
-package io.sda.szczepanskikrs.sequencer.api;
+package io.sda.szczepanskikrs.sequencer.api.dto;
 
 import lombok.Data;
 

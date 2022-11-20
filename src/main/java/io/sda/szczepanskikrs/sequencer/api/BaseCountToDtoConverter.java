@@ -1,5 +1,6 @@
 package io.sda.szczepanskikrs.sequencer.api;
 
+import io.sda.szczepanskikrs.sequencer.api.dto.DnaBaseCountDto;
 import io.sda.szczepanskikrs.sequencer.dna.DnaBaseCount;
 import io.sda.szczepanskikrs.sequencer.dna.DnaMolecule;
 import org.springframework.stereotype.Component;

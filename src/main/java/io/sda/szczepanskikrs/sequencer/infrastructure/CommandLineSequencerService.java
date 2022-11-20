@@ -1,7 +1,7 @@
 package io.sda.szczepanskikrs.sequencer.infrastructure;
 
 import io.sda.szczepanskikrs.sequencer.api.BaseCountConverter;
-import io.sda.szczepanskikrs.sequencer.api.DnaBaseCountDto;
+import io.sda.szczepanskikrs.sequencer.api.dto.DnaBaseCountDto;
 import io.sda.szczepanskikrs.sequencer.dna.DnaBaseCount;
 import io.sda.szczepanskikrs.sequencer.dna.DnaBaseCounter;
 import org.springframework.beans.factory.annotation.Autowired;
