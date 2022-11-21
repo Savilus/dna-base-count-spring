@@ -15,4 +15,5 @@ public class StreamDnaBaseCounter implements DnaBaseCounter {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
         );
     }
+
 }

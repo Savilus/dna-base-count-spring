@@ -22,6 +22,7 @@ public class LoopDnaBaseCounter implements DnaBaseCounter{
                 dnaMoleculeMap.put(DnaMolecule.fromLetter(molecule), 1l);
                 continue;
             }
+
                 switch (molecule){
                     case 'A' , 'a' -> dnaMoleculeMap.put(DnaMolecule.ADENINE, dnaMoleculeMap.get(DnaMolecule.ADENINE) + 1);
                     case 'C' , 'c' -> dnaMoleculeMap.put(DnaMolecule.CYTOSINE, dnaMoleculeMap.get(DnaMolecule.CYTOSINE) + 1);

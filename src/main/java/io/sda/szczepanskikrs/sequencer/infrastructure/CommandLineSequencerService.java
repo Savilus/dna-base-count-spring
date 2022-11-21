@@ -55,6 +55,7 @@ public class CommandLineSequencerService implements CommandLineRunner {
     }
 }
 
+
 /**
  * @SpringBootApplication - Startuje aplikacje (od classpatha przez skanowanie komponentów)
  * @SpringBootTest - Przygotowuje kontekst testowy i startuje aplikacje gotową do testów.

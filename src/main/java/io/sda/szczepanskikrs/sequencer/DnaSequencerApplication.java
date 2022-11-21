@@ -9,3 +9,4 @@ public class DnaSequencerApplication {
         SpringApplication.run(DnaSequencerApplication.class, args);
     }
 }
+

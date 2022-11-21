@@ -15,3 +15,4 @@ public class ApplicationConfig {
     // To będzie nasz komponent
     Consumer<String> output(){return log::info;}
 }
+

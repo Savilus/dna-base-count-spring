@@ -11,7 +11,8 @@ public enum DnaMolecule {
             case 'C', 'c' -> CYTOSINE;
             case 'G', 'g' -> GUANINE;
             case 'T', 't' -> THYMINE;
-            default -> throw new IllegalStateException("Unsupported molecule value: " + letter);
+            default -> throw  new IllegalStateException("Unsupported molecule value: " + letter);
         };
     }
+
 }

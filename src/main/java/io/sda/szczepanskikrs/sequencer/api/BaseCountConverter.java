@@ -5,3 +5,4 @@ import io.sda.szczepanskikrs.sequencer.dna.DnaBaseCount;
 public interface BaseCountConverter<T> {
     T convertToType(DnaBaseCount input);
 }
+

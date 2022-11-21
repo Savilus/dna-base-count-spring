@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ThymineBaseCountConverter implements BaseCountConverter<ThymineDto> {
+
     @Override
     public ThymineDto convertToType(DnaBaseCount input) {
         return new ThymineDto(input.rawBaseCount().get(DnaMolecule.THYMINE).intValue());

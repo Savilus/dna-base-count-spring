@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 // Rejestrujemy komponent
 @Component
 public class BaseCountToDtoConverter implements BaseCountConverter<DnaBaseCountDto> {
+
     @Override
     public DnaBaseCountDto convertToType(DnaBaseCount input) {
         // Konwersja DnaBaseCount -> DnaBaseCountDto
