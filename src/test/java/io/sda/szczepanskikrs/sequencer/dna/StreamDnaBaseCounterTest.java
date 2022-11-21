@@ -68,7 +68,7 @@ public class StreamDnaBaseCounterTest {
     }
 
     @Test
-    void shouldReturnLineIfSequenceIsEmpty() {
+    void shouldReturnEmptyMapIfSequenceIsEmpty() {
         // Given
         var systemUnderTest = new StreamDnaBaseCounter();
         var dnaSequence = "";
