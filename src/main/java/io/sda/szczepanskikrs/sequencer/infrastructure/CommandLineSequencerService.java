@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @Service
 public class CommandLineSequencerService implements CommandLineRunner {
@@ -20,32 +22,42 @@ public class CommandLineSequencerService implements CommandLineRunner {
     private final BaseCountConverter<DnaBaseCountDto> converter;
     private final BaseCountConverter<ThymineDto> thymineDtoBaseCountConverter;
     private final Consumer<String> outputConsumer;
+    private final Supplier<LocalDateTime> localDateTime;
 
     //Autowired nie jest wymagane ale jest dobrą praktyką przy wstrzykiwaniu przez konstruktor.
     @Autowired
     public CommandLineSequencerService(
             DnaBaseCounter baseCounter,
             BaseCountConverter<DnaBaseCountDto> converter,
-            BaseCountConverter<ThymineDto> thymineDtoBaseCountConverter, Consumer<String> outputConsumer) {
+            BaseCountConverter<ThymineDto> thymineDtoBaseCountConverter,
+            Consumer<String> outputConsumer,
+            Supplier<LocalDateTime> localDateTime) {
         this.baseCounter = baseCounter;
         this.converter = converter;
         this.thymineDtoBaseCountConverter = thymineDtoBaseCountConverter;
         this.outputConsumer = outputConsumer;
+        this.localDateTime = localDateTime;
     }
 
     @Override
     // Opdala się po starcie aplikacji
     public void run(String... args) throws Exception {
-        String sequence = "CGTAAAAAATTACAACGTCCTTTGGCTATCTCTTAAACTCCTGCTAAATGCTCGTGCTTTCCAATTATGTAAGCGTTCCGAGACGGGGTGGTCGATTCTGAGGACAAAGGTCAAGATGGAGCGCATCGAACGCAATAAGGATCATTTGATGGGACGTTTCGTCGACAAAGTCTTGTTTCGAGAGTAACGGCTACCGTCTTCGATTCTGCTTATAACACTATGTTCTTATGAAATGGATGTTCTGAGTTGGTCAGTCCCAATGTGCGGGGTTTCTTTTAGTACGTCGGGAGTGGTATTATATTTAATTTTTCTATATAGCGATCTGTATTTAAGCAATTCATTTAGGTTATCGCCGCGATGCTCGGTTCGGACCGCCAAGCATCTGGCTCCACTGCTAGTGTCCTAAATTTGAATGGCAAACACAAATAAGATTTAGCAATTCGTGTAGACGACCGGGGACTTGCATGATGGGAGCAGCTTTGTTAAACTACGAACGTAAT";
+        String sequence = "";
         // Konwersja do DTO
+        long start = System.nanoTime();
         DnaBaseCount dnaBaseCount = baseCounter.calculateDnaBaseCount(sequence);
+        long stop = System.nanoTime();
         DnaBaseCountDto dto = converter.convertToType(dnaBaseCount);
         // Konwersja do Thyminy
         ThymineDto thymineDto = thymineDtoBaseCountConverter.convertToType(dnaBaseCount);
-        // Printujemy DnaBaseCountDto
+        // Printujemy DnaBaseCountDto oraz czas w jakim są wykonane obliczenia
         outputConsumer.accept(dto.toString());
+        outputConsumer.accept("Total time of calculations: " + ((stop - start) * 0.000001) + " milliseconds");
         // Printujemy ThymineDTO
         outputConsumer.accept(thymineDto.toString());
+        // Printujemy czas w którym wykonała się metoda run
+        outputConsumer.accept("LocalDateTime: " + localDateTime.get());
+
     }
 
     @PostConstruct
@@ -53,6 +65,8 @@ public class CommandLineSequencerService implements CommandLineRunner {
     public void printDate() {
         System.out.println(Instant.now());
     }
+
+
 }
 
 
@@ -74,7 +88,6 @@ public class CommandLineSequencerService implements CommandLineRunner {
  * - session
  * - globalSession
  * - application
-
  * @PreDestory - Może(ale nie musi) być wywołany kiedy bean jest niszczony przez kontekst.
  * @PostConstruct - Wywoływane po stworzeniu beana, do wszelkiego rodzaju setupów.
  * @ComponentScan - Pozwala na zdefiniowanie pakietów które mają być skanowane, domyślnie skanuje pakiet klasy na którą go nakładamy.

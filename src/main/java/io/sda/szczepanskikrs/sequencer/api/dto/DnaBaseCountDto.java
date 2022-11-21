@@ -2,6 +2,8 @@ package io.sda.szczepanskikrs.sequencer.api.dto;
 
 import lombok.Data;
 
+import java.time.Instant;
+
 @Data
 public class DnaBaseCountDto {
 
@@ -17,6 +19,6 @@ public class DnaBaseCountDto {
               ", thymineCount=" + tCount +
               ", guanineCount=" + gCount +
               ", cytosineCount=" + cCount +
-              '}';
+              '}' + "\n" + " Calculation time stamp: " + Instant.now();
    }
 }
