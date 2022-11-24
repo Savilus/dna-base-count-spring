@@ -7,7 +7,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-@Primary
 public class StreamDnaBaseCounter implements DnaBaseCounter {
     @Override
     public DnaBaseCount calculateDnaBaseCount(String rawBase) {

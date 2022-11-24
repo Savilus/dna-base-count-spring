@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Primary
 public class LoopDnaBaseCounter implements DnaBaseCounter{
     @Override
     public DnaBaseCount calculateDnaBaseCount(String rawBase) {

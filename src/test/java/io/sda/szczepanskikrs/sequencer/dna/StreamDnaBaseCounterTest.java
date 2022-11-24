@@ -1,7 +1,10 @@
 package io.sda.szczepanskikrs.sequencer.dna;
 
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +12,51 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class StreamDnaBaseCounterTest {
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ATCGQW!DAGTATTGAGCTCTAGCG", "ATXSACGA" , "A AAAKUAA", " ATCGATGCATGOICCCG", "TGGCCUIUYXACACGGT" , "TGGCCGGHJAAA" , " " , "TGGCCGGH%JAAA", "ATCGA#TTGAGCTCTAGCG"})
+    public void shouldTrowExceptionIfSequenceIsNotValid(String rawBaseTest){
+        var systemUnderTest = new StreamDnaBaseCounter();
+        boolean thrown = false;
+
+        // When
+        try {
+            var result = systemUnderTest.calculateDnaBaseCount(rawBaseTest);
+        } catch (Exception e) {
+            thrown = true;
+        }
+        // Then
+        assertThat(thrown).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ATCGATTGAGAACCGGTTCTCTAGCG" , "TAAAGTTTGGGCCGCCCAAACCGT", "GGAAACTGTGTGTGTGAAAGGTTCC" , "AAAAGGGTTGTTCCAAAGGTTCCTC", "AAAGGAAGGTCCTTGTTTCCCAGC" , "AGTCAGTCAGTCAGTCGGTACCCGGAT"})
+    public void shouldCalculateMoleculesIfValidSequenceIsProvided(String rawBaseTest){
+        var systemUnderTest = new StreamDnaBaseCounter();
+
+        var result = systemUnderTest.calculateDnaBaseCount(rawBaseTest);
+
+        assertThat(result.rawBaseCount().get(DnaMolecule.ADENINE) > 5);
+        assertThat(result.rawBaseCount().get(DnaMolecule.CYTOSINE) > 5);
+        assertThat(result.rawBaseCount().get(DnaMolecule.GUANINE) > 5);
+        assertThat(result.rawBaseCount().get(DnaMolecule.THYMINE) > 5);
+    }
+
+    @ParameterizedTest
+    @NullSource
+    public void shouldThrowExceptionIfNullIsProvided(String input){
+        var systemUnderTest = new StreamDnaBaseCounter();
+        boolean thrown = false;
+
+        try {
+        var result =systemUnderTest.calculateDnaBaseCount(input);
+        }catch (Exception e){
+            thrown = true;
+        }
+
+        assertThat(thrown).isTrue();
+    }
+
     @Test
     public void should_calculateExpectedBaseCount_when_validSequenceProvided() {
         // Given
@@ -32,6 +80,8 @@ public class StreamDnaBaseCounterTest {
         assertThat(guanineCount).isEqualTo(expectedGuanineCount);
         assertThat(cytosineCount).isEqualTo(expectedCytosineCount);
     }
+
+
 
     @Test
     public void shouldThrowExceptionWhileNoValidSequenceIsProvided() {
@@ -81,5 +131,15 @@ public class StreamDnaBaseCounterTest {
 
         // Then
         assertThat(result).isEqualTo(dnaBaseCount);
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    void shouldReturnEmptyMapIfSequenceIsEmptyParametrizedTest(String emptySource){
+        var systemUnderTest = new StreamDnaBaseCounter();
+
+        var result = systemUnderTest.calculateDnaBaseCount(emptySource);
+
+        assertThat(result.rawBaseCount().isEmpty()).isTrue();
     }
 }

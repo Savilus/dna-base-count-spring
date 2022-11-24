@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class LoopDnaBaseCounterTest {
 
@@ -66,19 +65,17 @@ class LoopDnaBaseCounterTest {
     }
 
     @Test
-    void shouldReturnLineIfSequenceIsEmpty() {
+    void shouldReturnEmptyMapIfSequenceIsEmpty() {
         // Given
         var systemUnderTest = new StreamDnaBaseCounter();
         var dnaSequence = "";
-        Map<DnaMolecule, Long> dnaMoleculeMap = new HashMap<>();
-        DnaBaseCount dnaBaseCount = new DnaBaseCount(dnaMoleculeMap);
 
         // When
 
         var result = systemUnderTest.calculateDnaBaseCount(dnaSequence);
 
         // Then
-        assertThat(result).isEqualTo(dnaBaseCount);
+        assertThat(result.rawBaseCount().isEmpty()).isTrue();
     }
 
 }
